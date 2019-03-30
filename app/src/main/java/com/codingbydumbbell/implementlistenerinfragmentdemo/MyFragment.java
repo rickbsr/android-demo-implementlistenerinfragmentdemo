@@ -10,12 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 
-/**
- * @author Rick
- * @create 2019/3/30
- * @className MyFragment
- * @description - TODO
- */
 public class MyFragment extends Fragment {
 
     private static MyFragment instance;
@@ -23,10 +17,9 @@ public class MyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_my, container, false); // 建造 View
         SeekBar bar = view.findViewById(R.id.seekBar);
-        bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() { // SeekBar 的傾聽器
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 myInterface.onSeekBarChanged(progress);
@@ -45,17 +38,21 @@ public class MyFragment extends Fragment {
         return view;
     }
 
+    // Singleton 的設計
     public static MyFragment getInstance() {
         if (instance == null) instance = new MyFragment();
         return instance;
     }
 
+    // 設計 CallBack 所需的 interface
     public interface MyFragmentInterface {
         void onSeekBarChanged(int progress);
     }
 
+    // 宣告
     MyFragmentInterface myInterface;
 
+    // 將它與 Fragment 連結
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
